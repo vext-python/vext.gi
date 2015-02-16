@@ -1,0 +1,12 @@
+# Gobject Introspection vext
+#
+
+# Vext will allow access to these modules
+modules:
+    gi
+
+test_import:
+    # Vext will try and import any modules here
+    # To check if the install worked
+    gi.repository
+
