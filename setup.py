@@ -14,7 +14,7 @@ with open(path.join(here, 'DESCRIPTION.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='vext.pygtk',
+    name='vext.gi',
 
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
@@ -54,11 +54,11 @@ setup(
     ],
 
     # What does your project relate to?
-    keywords='sample setuptools development pygtk',
+    keywords='sample setuptools development gi',
 
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
-    #packages=['vext.pygtk'],
+    #packages=['vext.gi'],
 
     # List run-time dependencies here.  These will be installed by pip when your
     # project is installed. For an analysis of "install_requires" vs pip's
@@ -81,8 +81,8 @@ setup(
     #    'sample': ['package_data.dat'],
     #},
 
-    # Install pygtk vext
+    # Install gi vext
     data_files=[
-        (path.join(site_packages_path, 'vext/specs'), ["pygtk.vext"])
+        (path.join(site_packages_path, 'vext/specs'), ["gi.vext"])
     ],
 )
