@@ -19,7 +19,7 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='0.1.3',
+    version='0.1.4',
 
     description='Use system python packages in a virtualenv',
     long_description=long_description,
@@ -60,7 +60,8 @@ setup(
     # project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires=["vext>=0.3.7"],
+    setup_requires=["setuptools>=0.15.1"],
+    install_requires=["vext>=0.3.9"],
 
     # List additional groups of dependencies here (e.g. development dependencies).
     # You can install these using the following syntax, for example:
