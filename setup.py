@@ -1,16 +1,27 @@
-from distutils import sysconfig
-from setuptools import setup, find_packages  # Always prefer setuptools over distutils
 from codecs import open  # To use a consistent encoding
-from os import path, unlink
 from glob import glob
-from shutil import copyfile
-from sys import argv
+from os.path import dirname, abspath, join
+from sys import prefix
 
-here = path.abspath(path.dirname(__file__))
+from distutils import sysconfig
+from setuptools import setup
+from setuptools.command.install import install
+
+here=dirname(abspath(__file__))
 site_packages_path = sysconfig.get_python_lib()
+vext_files = list(glob("*.vext"))
+
+def _post_install():
+    from vext.install import check_sysdeps
+    check_sysdeps(join(here, *vext_files))
+
+class CheckInstall(install):
+    def run(self):
+        self.do_egg_install()
+        self.execute(_post_install, [], msg="Check system dependencies:")
 
 # Get the long description from the relevant file
-with open(path.join(here, 'DESCRIPTION.rst'), encoding='utf-8') as f:
+with open(join(here, 'DESCRIPTION.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
@@ -19,7 +30,7 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='0.1.4',
+    version='0.4.2',
 
     description='Use system python packages in a virtualenv',
     long_description=long_description,
@@ -61,7 +72,7 @@ setup(
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
     setup_requires=["setuptools>=0.15.1"],
-    install_requires=["vext>=0.3.9"],
+    install_requires=["vext>=0.4.2"],
 
     # List additional groups of dependencies here (e.g. development dependencies).
     # You can install these using the following syntax, for example:
@@ -78,8 +89,8 @@ setup(
     #    'sample': ['package_data.dat'],
     #},
 
-    # Install gi vext
+    # Install vext files
     data_files=[
-        (path.join(site_packages_path, 'vext/specs'), ["gi.vext"])
+        (join(prefix, 'share/vext/specs'), glob("*.vext"))
     ],
 )
