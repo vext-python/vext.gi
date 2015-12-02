@@ -71,8 +71,8 @@ setup(
     # project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    setup_requires=["setuptools>=0.15.1"],
-    install_requires=["vext>=0.4.2"],
+    setup_requires=["setuptools>=0.18.1"],
+    install_requires=["vext>=0.4.99"],
 
     # List additional groups of dependencies here (e.g. development dependencies).
     # You can install these using the following syntax, for example:
