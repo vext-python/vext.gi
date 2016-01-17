@@ -1,7 +1,17 @@
-from codecs import open  # To use a consistent encoding
+#!/usr/bin/env python
+info="""
+Allow use of system gi.repository (Gtk3) from a virtualenv
+Should work on all platforms.
+
+report bugs to https://github.com/stuaxo/vext
+"""
+
+version="0.5.2"
+vext_version="vext>=%s" % version
+
+
 from glob import glob
 from os.path import dirname, abspath, join
-from sys import prefix
 from subprocess import call
 
 from distutils import sysconfig
@@ -10,21 +20,16 @@ from setuptools.command.install import install
 
 here=dirname(abspath(__file__))
 site_packages_path = sysconfig.get_python_lib()
-vext_files = glob("*.vext")
+vext_files = [join(here, fn) for fn in glob("*.vext")]
 
 def _post_install():
-    from vext.install import check_sysdeps, install_vexts
-    install_vexts(vext_files)  # data_files doesn't work in pip7 so do it ourselves
-    check_sysdeps(join(here, *vext_files))
+    cmd = ["vext", "-i " + " ".join(vext_files)]
+    call(cmd)
 
 class Install(install):
     def run(self):
         self.do_egg_install()
-        self.execute(_post_install, [], msg="Check system dependencies:")
-
-# Get the long description from the relevant file
-with open(join(here, 'DESCRIPTION.rst'), encoding='utf-8') as f:
-    long_description = f.read()
+        self.execute(_post_install, [], msg="Install vext files:")
 
 setup(
     name='vext.gi',
@@ -34,13 +39,10 @@ setup(
           'install': Install,
     },
 
-    # Versions should comply with PEP440.  For a discussion on single-sourcing
-    # the version across setup.py and the project code, see
-    # https://packaging.python.org/en/latest/single_source_version.html
-    version='0.5.0',
+    version=version,
 
     description='Use system python packages in a virtualenv',
-    long_description=long_description,
+    long_description=info,
 
     # The project's main homepage.
     url='https://github.com/stuaxo/vext',
@@ -79,5 +81,5 @@ setup(
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
     setup_requires=["setuptools>=0.18.8"],
-    install_requires=["vext>=0.5.0"],
+    install_requires=[vext_version],
 )
