@@ -2,6 +2,7 @@ from codecs import open  # To use a consistent encoding
 from glob import glob
 from os.path import dirname, abspath, join
 from sys import prefix
+from subprocess import call
 
 from distutils import sysconfig
 from setuptools import setup
@@ -9,13 +10,14 @@ from setuptools.command.install import install
 
 here=dirname(abspath(__file__))
 site_packages_path = sysconfig.get_python_lib()
-vext_files = list(glob("*.vext"))
+vext_files = glob("*.vext")
 
 def _post_install():
-    from vext.install import check_sysdeps
+    from vext.install import check_sysdeps, install_vexts
+    install_vexts(vext_files)  # data_files doesn't work in pip7 so do it ourselves
     check_sysdeps(join(here, *vext_files))
 
-class CheckInstall(install):
+class Install(install):
     def run(self):
         self.do_egg_install()
         self.execute(_post_install, [], msg="Check system dependencies:")
@@ -26,11 +28,16 @@ with open(join(here, 'DESCRIPTION.rst'), encoding='utf-8') as f:
 
 setup(
     name='vext.gi',
+    zip_safe=False,
+
+    cmdclass={
+          'install': Install,
+    },
 
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='0.4.99',
+    version='0.5.0',
 
     description='Use system python packages in a virtualenv',
     long_description=long_description,
@@ -71,26 +78,6 @@ setup(
     # project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    setup_requires=["setuptools>=0.18.1"],
-    install_requires=["vext>=0.4.99"],
-
-    # List additional groups of dependencies here (e.g. development dependencies).
-    # You can install these using the following syntax, for example:
-    # $ pip install -e .[dev,test]
-    #extras_require = {
-    #    'dev': ['check-manifest'],
-    #    'test': ['coverage'],
-    #},
-
-    # If there are data files included in your packages that need to be
-    # installed, specify them here.  If using Python 2.6 or less, then these
-    # have to be included in MANIFEST.in as well.
-    #package_data={
-    #    'sample': ['package_data.dat'],
-    #},
-
-    # Install vext files
-    data_files=[
-        (join(prefix, 'share/vext/specs'), glob("*.vext"))
-    ],
+    setup_requires=["setuptools>=0.18.8"],
+    install_requires=["vext>=0.5.0"],
 )
