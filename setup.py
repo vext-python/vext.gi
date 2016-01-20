@@ -6,24 +6,20 @@ Should work on all platforms.
 report bugs to https://github.com/stuaxo/vext
 """
 
-version="0.5.2"
+version="0.5.4"
 vext_version="vext>=%s" % version
 
 
 from glob import glob
-from os.path import dirname, abspath, join
 from subprocess import call
 
-from distutils import sysconfig
 from setuptools import setup
 from setuptools.command.install import install
 
-here=dirname(abspath(__file__))
-site_packages_path = sysconfig.get_python_lib()
-vext_files = [join(here, fn) for fn in glob("*.vext")]
+vext_files = glob("*.vext")
 
 def _post_install():
-    cmd = ["vext", "-i " + " ".join(vext_files)]
+    cmd = ["vext", "-i" + (" -i".join(vext_files))]
     call(cmd)
 
 class Install(install):
@@ -33,7 +29,6 @@ class Install(install):
 
 setup(
     name='vext.gi',
-    zip_safe=False,
 
     cmdclass={
           'install': Install,
