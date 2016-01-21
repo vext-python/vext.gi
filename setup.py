@@ -6,7 +6,7 @@ Should work on all platforms.
 report bugs to https://github.com/stuaxo/vext
 """
 
-version="0.5.4"
+version="0.5.5"
 vext_version="vext>=%s" % version
 
 
@@ -24,6 +24,7 @@ def _post_install():
 
 class Install(install):
     def run(self):
+        import sys
         self.do_egg_install()
         self.execute(_post_install, [], msg="Install vext files:")
 
