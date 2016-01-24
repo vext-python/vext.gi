@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+
+from __future__ import print_function
+
 info="""
 Allow use of system gi.repository (Gtk3) from a virtualenv
 Should work on all platforms.
@@ -6,7 +9,7 @@ Should work on all platforms.
 report bugs to https://github.com/stuaxo/vext
 """
 
-version="0.5.11"
+version="0.5.14"
 vext_version="vext>=%s" % version
 
 
@@ -34,8 +37,9 @@ class Install(install):
         # TOOD - Move this code to a common place.
         print("vext.gi Install")
         if sys.prefix == '/usr':
-            print "Not installing PTH file to real prefix"
+            print("Not installing PTH file to real prefix")
             return
+        print(["pip", "install", vext_version])
         call(["pip", "install", vext_version])
         self.do_egg_install()
         self.execute(_post_install, [self], msg="Install vext files:")
