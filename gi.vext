@@ -14,3 +14,7 @@ test_import:
 install_message:
     You might want to try pygi with your package, it is built with CFFI and
     works with virtualenv and covers quite a lot of the gi.repository
+
+pths:
+    # rpath.pth adds the "gnome" directory
+    rpath.pth
