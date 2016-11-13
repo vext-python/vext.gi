@@ -9,7 +9,7 @@ Should work on all platforms.
 report bugs to https://github.com/stuaxo/vext
 """
 
-version="0.5.20"
+version="0.6.7"
 vext_version="vext>=%s" % version
 
 
@@ -24,9 +24,11 @@ import sys
 
 vext_files = glob("*.vext")
 
+
 def _post_install(self):
     cmd = ["vext", "-e", "-i" + (" -i".join(vext_files))]
     call(cmd)
+
 
 class Install(install):
     def run(self):
@@ -39,8 +41,10 @@ class Install(install):
         if sys.prefix == '/usr':
             print("Not installing PTH file to real prefix")
             return
-        print(["pip", "install", vext_version])
-        call(["pip", "install", vext_version])
+
+        CMDLINE = [sys.executable, "-mpip", "install", vext_version]
+        print(CMDLINE)
+        call(CMDLINE)
         self.do_egg_install()
         self.execute(_post_install, [self], msg="Install vext files:")
 
