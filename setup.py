@@ -42,9 +42,6 @@ class Install(install):
             print("Not installing PTH file to real prefix")
             return
 
-        CMDLINE = [sys.executable, "-mpip", "install", vext_version]
-        print(CMDLINE)
-        call(CMDLINE)
         self.do_egg_install()
         self.execute(_post_install, [self], msg="Install vext files:")
 
@@ -97,7 +94,7 @@ setup(
     # project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    setup_requires=[vext_version, "setuptools>=0.18.8"],
+    setup_requires=["setuptools>=0.18.8"],
     install_requires=[vext_version],
     data_files=[('', ["gi.vext"])]
 )
