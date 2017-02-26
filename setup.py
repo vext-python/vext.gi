@@ -9,7 +9,7 @@ Should work on all platforms.
 report bugs to https://github.com/stuaxo/vext
 """
 
-version="0.6.7"
+version="0.6.8"
 vext_version="vext>=%s" % version
 
 
