@@ -9,7 +9,7 @@ Should work on all platforms.
 report bugs to https://github.com/stuaxo/vext
 """
 
-version="0.6.8"
+version="0.7.0"
 vext_version="vext>=%s" % version
 
 
@@ -42,8 +42,8 @@ class Install(install):
             print("Not installing PTH file to real prefix")
             return
 
-        self.do_egg_install()
-        self.execute(_post_install, [self], msg="Install vext files:")
+        install.run(self)
+        install.execute(self, _post_install, [self], msg="Install vext files:")
 
 setup(
     name='vext.gi',
