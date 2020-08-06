@@ -9,7 +9,7 @@ Should work on all platforms.
 report bugs to https://github.com/stuaxo/vext
 """
 
-version="0.7.0"
+version="0.7.4"
 vext_version="vext>=%s" % version
 
 
@@ -96,5 +96,5 @@ setup(
     # https://packaging.python.org/en/latest/requirements.html
     setup_requires=["setuptools>=0.18.8"],
     install_requires=[vext_version],
-    data_files=[('', ["gi.vext"])]
+    data_files=[('share/vext/specs', ["gi.vext"])]
 )
